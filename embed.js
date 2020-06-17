@@ -1,12 +1,11 @@
 const Discord = require("discord.js");
 const fs = require('fs');
-const { response } = require("express");
 const availableResponses = JSON.parse(fs.readFileSync('availableResponses.json', 'utf-8'));
 
 var embed = {};
 var compiledResponses = [];
 
-for(response in availableResponses.commands) compiledResponses.push(response);
+for(response in availableResponses.commands) compiledResponses.push(`\`${response}\``);
 
 
 embed.helpmenu = new Discord.MessageEmbed()
