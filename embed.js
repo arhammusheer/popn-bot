@@ -6,10 +6,8 @@ const availableResponses = JSON.parse(fs.readFileSync('availableResponses.json',
 var embed = {};
 var compiledResponses = [];
 
-for(response in availableResponses.commands) {
-  var processedResponse = `\`${response}\``;
-  compiledResponses.push(processedResponse);
-}
+for(response in availableResponses.commands) compiledResponses.push(`\`${response}\``);
+
 
 embed.helpmenu = new Discord.MessageEmbed()
   .setColor("#000000")
