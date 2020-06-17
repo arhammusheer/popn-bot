@@ -7,7 +7,7 @@ var embed = {};
 var compiledResponses = [];
 
 for(response in availableResponses.commands) {
-  processedResponse = `\`${response}\``;
+  var processedResponse = `\`${response}\``;
   compiledResponses.push(processedResponse);
 }
 
