@@ -7,8 +7,12 @@ const fs = require('fs');
 var path = require("path");
 const express = require('express')
 const app = express()
-const port = 80;
+var https = require('https');
+var http = require('http');
 const logger = require('morgan');
+const certificate = fs.readFileSync('/etc/letsencrypt/live/popn.ml/fullchain.pem', 'utf-8');
+const privKey = fs.readFileSync('/etc/letsencrypt/live/popn.ml/privkey.pem', 'utf-8')
+var credentials = {key: privateKey, cert: certificate};
 
 var badWordAlertSent;
 
@@ -41,7 +45,11 @@ app.get('/', function(req, res, next){
 });
 
 //Express.js Server Run
-app.listen(port, () => console.log(`popN BOT is ONLINE`));
+var httpServer = http.createServer(app);
+var httpsServer = https.createServer(credentials, app);
+
+httpServer.listen(80);
+httpsServer.listen(443);
 
 //Bot Login
 bot.login(TOKEN);
