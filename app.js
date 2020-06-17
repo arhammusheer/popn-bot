@@ -26,7 +26,7 @@ for(response in availableResponses.commands) compiledResponses.push(response);
 
 var renderData = {};
 
-renderData['availableResponses'] = compiledResponses;
+renderData['availableResponses'] = compiledResponses.replace(/,\s*$/, "");
 renderData['badWords'] = badWordList;
 
 // view engine setup
