@@ -37,7 +37,7 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
-
+app.use(requireHTTPS);
 
 //Express.js Website Paths
 app.get('/', function(req, res, next){
@@ -93,4 +93,11 @@ function checkForSpam(message){
       message.delete();
     }
   }
+}
+
+function requireHTTPS(req, res, next) {
+  if (!req.secure !== 'https' && process.env.NODE_ENV !== "development") {
+    return res.redirect('https://' + req.get('host') + req.url);
+  }
+  next();
 }
