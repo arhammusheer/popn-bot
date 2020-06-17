@@ -11,7 +11,7 @@ var https = require('https');
 var http = require('http');
 const logger = require('morgan');
 const certificate = fs.readFileSync('/etc/letsencrypt/live/popn.ml/fullchain.pem', 'utf-8');
-const privKey = fs.readFileSync('/etc/letsencrypt/live/popn.ml/privkey.pem', 'utf-8')
+const privateKey = fs.readFileSync('/etc/letsencrypt/live/popn.ml/privkey.pem', 'utf-8')
 var credentials = {key: privateKey, cert: certificate};
 
 var badWordAlertSent;
