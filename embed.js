@@ -11,7 +11,7 @@ embed.helpmenu = new Discord.MessageEmbed()
   .setColor("#000000")
   .setTitle("Help Menu")
   .addFields(
-    { name: "Available Responses:", value: compiledResponses.join(", ").replace(/,\s*$/, "")},
+    { name: "Available Responses:", value: compiledResponses.join(", ")},
     { name: "Get your own response" ,value: "DM <@!490907114370236426> to get your own custom response"}
   );
 
