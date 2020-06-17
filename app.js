@@ -48,7 +48,11 @@ app.use(express.static(path.join(__dirname, "public")));
 
 //Express.js Website Paths
 app.get("/", function (req, res, next) {
-  res.render("status", renderData);
+  if(req.secure){
+    res.render("status", renderData);
+  } else {
+    res.redirect('https://' + req.headers.host + req.url);
+  }
 });
 
 //Express.js Server Run
