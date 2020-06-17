@@ -45,17 +45,6 @@ app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
-app.use(function (req, res, next) {
-  var schema = req.headers["x-forwarded-proto"];
-
-  if (schema === "https") {
-    // Already https; don't do anything special.
-    next();
-  } else {
-    // Redirect to https.
-    res.redirect("https://" + req.headers.host + req.url);
-  }
-});
 
 //Express.js Website Paths
 app.get("/", function (req, res, next) {
