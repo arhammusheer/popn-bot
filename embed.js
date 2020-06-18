@@ -16,7 +16,7 @@ embed.helpmenu = new Discord.MessageEmbed()
     { name: "Get your own response" ,value: "DM <@!490907114370236426> to get your own custom response"}
   );
 
-embed.levelsMenu = new Discord.MessageEmbed()
+embed.levelsDMWarning = new Discord.MessageEmbed()
   .setColor("#000000")
   .setTitle("Levels Help")
   .addFields(

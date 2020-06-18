@@ -14,25 +14,16 @@ const certificate = fs.readFileSync(
   "./ssl_certificates/fullchain.pem",
   "utf-8"
 );
-const privateKey = fs.readFileSync(
-  "./ssl_certificates/privkey.pem",
-  "utf-8"
-);
+const privateKey = fs.readFileSync("./ssl_certificates/privkey.pem", "utf-8");
 var credentials = { key: privateKey, cert: certificate };
 
 var badWordAlertSent;
-
-var availableResponses = JSON.parse(
-  fs.readFileSync("availableResponses.json", "utf-8")
-);
-
-var badWordList = JSON.parse(fs.readFileSync("badWordList.json", "utf-8"));
-
+var availableResponses = require("./availableResponses.json");
+var badWordList = require("./badWordList.json");
 var compiledResponses = [];
+var renderData = {};
 
 for (response in availableResponses.commands) compiledResponses.push(response);
-
-var renderData = {};
 
 renderData["availableResponses"] = compiledResponses;
 renderData["badWords"] = badWordList;
@@ -104,12 +95,11 @@ bot.on("message", async (msg) => {
 });
 
 function checkForSpam(message) {
-  if (
-    !message.content.toLowerCase().includes("levels") ||
-    !message.content.toLowerCase().includes("rank")
-  ) {
+  allowedMessages = ["!rank", "!levels"];
+  if (allowedMessages.indexOf(message.content.toLowerCase()) === -1) {
     if (message.author.id != "159985870458322944") {
       message.delete();
+      message.author.send(embed.levelsDMWarning);
     }
   }
 }
