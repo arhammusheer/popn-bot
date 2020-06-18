@@ -11,11 +11,11 @@ var https = require("https");
 var http = require("http");
 const logger = require("morgan");
 const certificate = fs.readFileSync(
-  "/etc/letsencrypt/live/popn.ml/fullchain.pem",
+  "./ssl_certificates/fullchain.pem",
   "utf-8"
 );
 const privateKey = fs.readFileSync(
-  "/etc/letsencrypt/live/popn.ml/privkey.pem",
+  "./ssl_certificates/privkey.pem",
   "utf-8"
 );
 var credentials = { key: privateKey, cert: certificate };
@@ -48,10 +48,10 @@ app.use(express.static(path.join(__dirname, "public")));
 
 //Express.js Website Paths
 app.get("/", function (req, res, next) {
-  if(req.secure){
+  if (req.secure) {
     res.render("status", renderData);
   } else {
-    res.redirect('https://' + req.headers.host + req.url);
+    res.redirect("https://" + req.headers.host + req.url);
   }
 });
 
