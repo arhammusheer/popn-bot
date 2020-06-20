@@ -76,7 +76,7 @@ bot.on("message", async (msg) => {
 
   //Bad word Filter
   badWordList.some((element) => {
-    if (msg.content.toLowerCase().includes(element)) {
+    if (msg.content.toLowerCase().replace(/\s/g, "").includes(element)) {
       if (
         !msg.content.toLowerCase().includes("dikshit") &&
         msg.author.id != bot.user.id &&
