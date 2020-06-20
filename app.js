@@ -116,5 +116,6 @@ function addNewResponse(message){
     json = JSON.stringify(jsonResponses);
     fs.writeFile('./availableResponses.json', json, 'utf8', callback);
     availableResponses = jsonResponses;
+    message.channel.send("New response Added 😃");
 }});
 }
