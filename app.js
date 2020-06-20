@@ -107,7 +107,7 @@ function checkForSpam(message) {
 function addNewResponse(message){
   key = message.content.toLowerCase().split(' ')[3];
   message = message.content.toLowerCase().split(' ').slice(3).join(' ');
-  fs.readFile('myjsonfile.json', 'utf8', function readFileCallback(err, data){
+  fs.readFile('./availableResponses.json', 'utf8', function readFileCallback(err, data){
     if (err){
         console.log(err);
     } else {
