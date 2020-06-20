@@ -20,6 +20,7 @@ var credentials = { key: privateKey, cert: certificate };
 var badWordAlertSent;
 var availableResponses = require("./availableResponses.json");
 var badWordList = require("./badWordList.json");
+var badWordException = require("./badWordExceptions.json");
 var compiledResponses = [];
 var renderData = {};
 
@@ -76,12 +77,8 @@ bot.on("message", async (msg) => {
 
   //Bad word Filter
   badWordList.some((element) => {
-    if (msg.content.toLowerCase().replace(/\s/g, "").includes(element)) {
-      if (
-        !msg.content.toLowerCase().includes("dikshit") &&
-        msg.author.id != bot.user.id &&
-        badWordAlertSent == false
-      ) {
+    if (msg.content.toLowerCase().replace(/\s/g, "").includes(element) && !badWordException.includes(element)) {
+      if (msg.author.id != bot.user.id && badWordAlertSent == false) {
         msg.react("🚨");
         msg.channel.send("🚨 BAD WORD ALERT 🚨");
         badWordAlertSent = true;
