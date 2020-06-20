@@ -77,8 +77,8 @@ bot.on("message", async (msg) => {
 
   //Bad word Filter
   badWordList.some((element) => {
-    if (msg.content.toLowerCase().replace(/\s/g, "").includes(element) && !badWordException.includes(element)) {
-      if (msg.author.id != bot.user.id && badWordAlertSent == false) {
+    if (msg.content.toLowerCase().replace(/\s/g, "").includes(element)) {
+      if (msg.author.id != bot.user.id && badWordAlertSent == false && !badWordException.includes(element)) {
         msg.react("🚨");
         msg.channel.send("🚨 BAD WORD ALERT 🚨");
         badWordAlertSent = true;
