@@ -78,15 +78,19 @@ bot.on("message", async (msg) => {
 
   //Bad word Filter
   badWordList.some((element) => {
-    if (msg.content.toLowerCase().replace(/\s/g, "").includes(element)) {
-      if (msg.author.id != bot.user.id && badWordAlertSent == false) {
-        if(!badWordException.includes(element)){
+    badWordException.some((exceptionElement) => {
+      if (!exceptionElement.includes(element)) {
+        if (
+          msg.content.toLowerCase().replace(/\s/g, "").includes(element) &&
+          msg.author.id != bot.user.id &&
+          badWordAlertSent == false
+        ) {
           msg.react("🚨");
           msg.channel.send("🚨 BAD WORD ALERT 🚨");
           badWordAlertSent = true;
         }
       }
-    }
+    });
   });
   badWordAlertSent = false;
 
