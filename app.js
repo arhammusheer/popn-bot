@@ -21,6 +21,7 @@ var badWordAlertSent;
 var availableResponses = require("./availableResponses.json");
 var badWordList = require("./badWordList.json");
 var badWordException = require("./badWordExceptions.json");
+const { json } = require("express");
 var compiledResponses = [];
 var renderData = {};
 
@@ -71,9 +72,9 @@ bot.on("message", async (msg) => {
       msg.channel.send(availableResponses.commands[messageKey]);
   }
   //Static Responses
-  if (msg.content.toLowerCase() === "popn help")
-    msg.channel.send(embed.helpmenu);
+  if (msg.content.toLowerCase() === "popn help") msg.channel.send(embed.helpmenu);
   if (msg.content.toLowerCase() === "lmao") msg.react("😂");
+  if (msg.content.toLowerCase().startsWith("popn addnew")) addNewResponse(msg);
 
   //Bad word Filter
   badWordList.some((element) => {
@@ -101,4 +102,19 @@ function checkForSpam(message) {
       message.author.send(embed.levelsDMWarning);
     }
   }
+}
+
+function addNewResponse(message){
+  key = message.content.toLowerCase().split(' ')[3];
+  message = message.content.toLowerCase().split(' ').slice(3).join(' ');
+  fs.readFile('myjsonfile.json', 'utf8', function readFileCallback(err, data){
+    if (err){
+        console.log(err);
+    } else {
+    jsonResponses = JSON.parse(data);
+    jsonResponses.commands[key] = message;
+    json = JSON.stringify(jsonResponses);
+    fs.writeFile('./availableResponses.json', json, 'utf8', callback);
+    availableResponses = jsonResponses;
+}});
 }
