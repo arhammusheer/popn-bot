@@ -17,11 +17,10 @@ const certificate = fs.readFileSync(
 const privateKey = fs.readFileSync("./ssl_certificates/privkey.pem", "utf-8");
 var credentials = { key: privateKey, cert: certificate };
 
-var badWordAlertSent;
+var sendBadWordAlert = false;
 var availableResponses = require("./availableResponses.json");
 var badWordList = require("./badWordList.json");
 var badWordException = require("./badWordExceptions.json");
-const { json } = require("express");
 var compiledResponses = [];
 var renderData = {};
 
@@ -74,21 +73,39 @@ bot.on("message", async (msg) => {
   //Static Responses
   if (msg.content.toLowerCase() === "popn help") msg.channel.send(embed.helpmenu);
   if (msg.content.toLowerCase() === "lmao") msg.react("😂");
-  if (msg.content.toLowerCase().startsWith("popn addnew")) addNewResponse(msg);
+  if (msg.content.toLowerCase().startsWith("popn addnew")){
+    let allowedRole = msg.guild.roles.cache.find(guild => guild.name === 'bot-commander');
+    if(msg.member.roles.cache.has(allowedRole.id)){
+      addNewResponse(msg)
+    } else {
+      msg.channel.send(`Sorry, you don't have the role to use that command <@${msg.author.id}>`)
+    }
+    };
 
   //Bad word Filter
-  badWordList.some((element) => {
-    if (
-      msg.content.toLowerCase().replace(/\s/g, "").includes(element) &&
-      msg.author.id != bot.user.id &&
-      badWordAlertSent == false
-    ) {
+  badWordList.some((badWordElement) => {
+    
+    if( msg.content.toLowerCase().replace(/\s/g, "").includes(badWordElement) && msg.author.id != bot.user.id){
+
+      sendBadWordAlert = true; //Send Alert
+
+      //Exception Filter
+      badWordException.some((exceptionElement) => {
+        if(msg.content.toLowerCase().replace(/\s/g, "").includes(exceptionElement)) {
+          sendBadWordAlert = false;
+          console.log("Exception filtered " + exceptionElement)
+        }
+      });
+    }
+
+    if (sendBadWordAlert == true) {
+      console.log("BAD WORD ALERT SEND " + badWordElement)
       msg.react("🚨");
       msg.channel.send("🚨 BAD WORD ALERT 🚨");
-      badWordAlertSent = true;
+      badWordAlertMarker = true;
     }
+    sendBadWordAlert = false;
   });
-  badWordAlertSent = false;
 
   //Levels Channel Filter
   if (msg.channel.id == "719506718656167988") checkForSpam(msg);
@@ -102,20 +119,4 @@ function checkForSpam(message) {
       message.author.send(embed.levelsDMWarning);
     }
   }
-}
-
-function addNewResponse(message){
-  key = message.content.toLowerCase().split(' ')[3];
-  message = message.content.toLowerCase().split(' ').slice(3).join(' ');
-  fs.readFile('./availableResponses.json', 'utf8', function readFileCallback(err, data){
-    if (err){
-        console.log(err);
-    } else {
-    jsonResponses = JSON.parse(data);
-    jsonResponses.commands[key] = message;
-    json = JSON.stringify(jsonResponses);
-    fs.writeFile('./availableResponses.json', json, 'utf8', callback);
-    availableResponses = jsonResponses;
-    message.channel.send("New response Added 😃");
-}});
 }
