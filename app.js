@@ -56,13 +56,22 @@ bot.on("ready", () => {
 bot.on("message", async (msg) => {
   //Dynamic responses from availableResponses json
   for (messageKey in availableResponses.commands) {
-    if (msg.content.toLowerCase() == messageKey)
+    if (msg.content.toLowerCase() == messageKey) {
       msg.channel.send(availableResponses.commands[messageKey]);
+      console.log(
+        "Sent Dynamic Response: " + availableResponses.commands[messageKey]
+      );
+    }
   }
   //Static Responses
-  if (msg.content.toLowerCase() === "popn help")
+  if (msg.content.toLowerCase() === "popn help") {
     msg.channel.send(embed.helpmenu);
-  if (msg.content.toLowerCase() === "lmao") msg.react("😂");
+    console.log("Sent Help menu embed");
+  }
+  if (msg.content.toLowerCase() === "lmao") {
+    msg.react("😂");
+    console.log("send reaction response: lmao")
+  }
   if (msg.content.toLowerCase().startsWith("popn addnew")) {
     let allowedRole = msg.guild.roles.cache.find(
       (guild) => guild.name === "bot-commander"
