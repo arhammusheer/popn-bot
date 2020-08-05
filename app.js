@@ -72,10 +72,6 @@ bot.on("message", async (msg) => {
     msg.react("😂");
     console.log("send reaction response: lmao");
   }
-  if (msg.content.toLowerCase().startsWith("<@721765193985687623>")) {
-    msg.channel.send("<:dogegun:719305088409272404>");
-    msg.channel.send("Bichh What do you want?")
-  }
   if (msg.content.toLowerCase().startsWith("popn addnew")) {
     let allowedRole = msg.guild.roles.cache.find(
       (guild) => guild.name === "bot-commander"
