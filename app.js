@@ -55,26 +55,26 @@ bot.on("ready", () => {
 //Bot on-message callback
 bot.on("message", async (msg) => {
   //Dynamic responses from availableResponses json
-  if (msg.author.id != "705339269308219462") {
-    for (messageKey in availableResponses.commands) {
-      if (msg.content.toLowerCase() == messageKey) {
+  for (messageKey in availableResponses.commands) {
+    if (msg.content.toLowerCase() == messageKey) {
+      if(msg.author.id != "705339269308219462"){
         msg.channel.send(availableResponses.commands[messageKey]);
         console.log(
           "Sent Dynamic Response: " + availableResponses.commands[messageKey]
         );
+      } else {
+        msg.channel.send("BICHH I DON'T LISTEN TO RRUCHA");
       }
     }
-    //Static Responses
-    if (msg.content.toLowerCase() === "popn help") {
-      msg.channel.send(embed.helpmenu);
-      console.log("Sent Help menu embed");
-    }
-    if (msg.content.toLowerCase() === "lmao") {
-      msg.react("😂");
-      console.log("send reaction response: lmao");
-    }
-  } else {
-    msg.channel.send("BICHH I DON'T LISTEN TO RRUCHA");
+  }
+  //Static Responses
+  if (msg.content.toLowerCase() === "popn help") {
+    msg.channel.send(embed.helpmenu);
+    console.log("Sent Help menu embed");
+  }
+  if (msg.content.toLowerCase() === "lmao") {
+    msg.react("😂");
+    console.log("send reaction response: lmao");
   }
   if (msg.content.toLowerCase().startsWith("popn addnew")) {
     let allowedRole = msg.guild.roles.cache.find(
