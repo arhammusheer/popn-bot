@@ -57,14 +57,10 @@ bot.on("message", async (msg) => {
   //Dynamic responses from availableResponses json
   for (messageKey in availableResponses.commands) {
     if (msg.content.toLowerCase() == messageKey) {
-      if(msg.author.id != "705339269308219462"){
-        msg.channel.send(availableResponses.commands[messageKey]);
-        console.log(
-          "Sent Dynamic Response: " + availableResponses.commands[messageKey]
-        );
-      } else {
-        msg.channel.send("BICHH I DON'T LISTEN TO RRUCHA");
-      }
+      msg.channel.send(availableResponses.commands[messageKey]);
+      console.log(
+        "Sent Dynamic Response: " + availableResponses.commands[messageKey]
+      );
     }
   }
   //Static Responses
