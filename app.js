@@ -63,6 +63,9 @@ bot.on("message", async (msg) => {
       );
     }
   }
+  if(msg.channel.id == "741133567811256372") {
+    msg.delete();
+  }
   //Static Responses
   if (msg.content.toLowerCase() === "popn help") {
     msg.channel.send(embed.helpmenu);
