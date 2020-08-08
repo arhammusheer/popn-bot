@@ -73,12 +73,18 @@ bot.on("message", async (msg) => {
       .catch((error) =>
         msg.reply(`Couldn't delete messages because of: ${error}`)
       );
-    msg.reply("Cleared all messages").then((message) => {
-      message.delete({ timeout: 1000 });
-    });
+    msg
+      .reply("Cleared all messages")
+      .then((message) => {
+        message.delete({ timeout: 1000 });
+      })
+      .catch((err) => {
+        console.log(err);
+        msg.channel.send("an error occured!!");
+      });
   }
 
-  if (msg.channel.id == "741133567811256372") msg.delete({ timeout: 20000 });
+  if (msg.channel.id == "741133567811256372") msg.delete({ timeout: 5000 });
 
   //Static Responses
   if (msg.content.toLowerCase() === "popn help") {
