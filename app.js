@@ -63,9 +63,23 @@ bot.on("message", async (msg) => {
       );
     }
   }
-  if(msg.channel.id == "741133567811256372") {
-    msg.delete();
+  if (
+    msg.channel.id == "741133567811256372" &&
+    msg.content.toLowerCase() == "popn delete all"
+  ) {
+    const fetched = await msg.channel.messages.fetch({ limit: 100 });
+    msg.channel
+      .bulkDelete(fetched)
+      .catch((error) =>
+        msg.reply(`Couldn't delete messages because of: ${error}`)
+      );
+    msg.reply("Cleared all messages").then((message) => {
+      message.delete({ timeout: 1000 });
+    });
   }
+
+  if (msg.channel.id == "741133567811256372") msg.delete({ timeout: 20000 });
+
   //Static Responses
   if (msg.content.toLowerCase() === "popn help") {
     msg.channel.send(embed.helpmenu);
