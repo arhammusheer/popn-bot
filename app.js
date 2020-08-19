@@ -84,7 +84,7 @@ bot.on("message", async (msg) => {
       });
   }
 
-  if (msg.channel.id == "741133567811256372") msg.delete({ timeout: 5000 });
+  if (msg.channel.id == "741133567811256372") msg.delete({ timeout: 8000 });
 
   //Static Responses
   if (msg.content.toLowerCase() === "popn help") {
