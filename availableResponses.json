@@ -1,43 +1,76 @@
 {
   "commands": {
-    "rrucha": "😂🤣🤣😂😂",
-    "rruchia": "😂🤣🤣😂😂",
-    "arham": "https://tenor.com/view/dancing-mushroom-toad-gif-12939685",
-    "give me invite": "https://discord.gg/EbVPB7j",
-    "rum": "Arham :)",
-    "🥃": "Arham :)",
-    "yash": "🥬420",
-    "pallav": "<:sadkermit:719306846980145207>",
-    "rishabh": "🥶",
-    "chu": "Rishabh 😂",
-    "samridh": "sugar daddy 🍬",
-    "divya": "https://tenor.com/view/nervous-gif-4120579",
-    "sugar baby": "<@719110463350243348>",
-    "dhruv": "💦💦💦",
-    "sovesh": "OVERACHIEVER 💵 💵 💵",
-    "dikshit": "https://tenor.com/view/lloyd-bridges-dipshit-dumb-idiot-hot-shots-gif-10762754",
-    "himanshu": "https://tenor.com/bf7BW.gif",
-    "dinesh": "https://instagram.fmaa2-1.fna.fbcdn.net/v/t51.2885-19/s320x320/92757813_514006219289660_8142665072980787200_n.jpg?_nc_ht=instagram.fmaa2-1.fna.fbcdn.net&_nc_ohc=9_Dcn61IZzUAX9_Gn--&oh=0cf1e1698cee3042b8d11039ec83eb6f&oe=5F0E22E4",
-    "lakshya": "6️⃣9️⃣",
-    "sree": "🥘",
-    "angry": "https://tenor.com/view/mad-cat-grumpy-cant-sleep-gif-15028704",
-    "👀": "luSTy EyeS",
-    "good bot": "YES 😊. THENKZ...I AM GOOD BOT",
-    "bad bot": "Nu 😢. I am not bad....pliz Nu",
-    "boom": "💥💥💥",
-    "peepee": "poopoo",
-    "jo": "https://tenor.com/view/yawn-gif-5140022",
-    "aniket": "Hello G R A N N Y",
-    "vishesh": "I WANTTT SAAAXXXXXXX 💲💲💲💲💲",
-    "suvrat": "https://tenor.com/view/panda-office-pissed-tantrum-mad-gif-5146825",
-    "erica": " M O M M Y ",
-    "abby": "https://tenor.com/view/bathing-suit-bathing-suit-gif-7549898",
-    "molly": "💊💊💊 D R U G 💊💊💊",
-    "popn bot": "<:dogegun:719305088409272404> Bichh what do you want?",
-    "gurleen": "https://tenor.com/view/teddy-bear-ted-drinking-beer-beer-bottles-gif-16856499",
-    "nikki": "https://tenor.com/view/grrr-taco-guru-taco-guru-grrr-coqueto-conquista-gif-12142914",
-    "nahi": "https://cdn.discordapp.com/attachments/740758309048549427/742108370630213924/tenor.gif",
-    "gratisfaction": "D O E S - N O T - G I V E - S A T I S F A C T I O N",
-    "mehz": "🐱 PUS PUS 🐱"
+    "rrucha": ["😂🤣🤣😂😂"],
+    "rruchia": ["😂🤣🤣😂😂"],
+    "arham": ["https://tenor.com/view/dancing-mushroom-toad-gif-12939685"],
+    "give me invite": ["https://discord.gg/EbVPB7j"],
+    "invite": ["https://discord.gg/EbVPB7j"],
+    "rum": ["Arham :)"],
+    "🥃": ["Arham :)"],
+    "yash": ["🥬420"],
+    "pallav": ["<:sadkermit:719306846980145207>"],
+    "rishabh": ["🥶"],
+    "chu": ["Rishabh 😂"],
+    "samridh": ["sugar daddy 🍬"],
+    "divya": ["https://tenor.com/view/nervous-gif-4120579"],
+    "sugar baby": ["<@719110463350243348>"],
+    "sovesh": ["OVERACHIEVER 💵 💵 💵"],
+    "dikshit": [
+      "https://tenor.com/view/lloyd-bridges-dipshit-dumb-idiot-hot-shots-gif-10762754"
+    ],
+    "himanshu": ["https://tenor.com/bf7BW.gif"],
+    "lakshya": ["6️⃣9️⃣"],
+    "sree": ["🥘"],
+    "angry": ["https://tenor.com/view/mad-cat-grumpy-cant-sleep-gif-15028704"],
+    "👀": ["luSTy EyeS"],
+    "good bot": ["YES 😊. THENKZ...I AM GOOD BOT"],
+    "bad bot": ["Nu 😢. I am not bad....pliz Nu", "wtf bruh", "whyyyyyyyy"],
+    "boom": ["💥💥💥"],
+    "peepee": ["poopoo"],
+    "jo": ["https://tenor.com/view/yawn-gif-5140022"],
+    "aniket": ["Hello G R A N N Y"],
+    "vishesh": ["I WANTTT SAAAXXXXXXX 💲💲💲💲💲"],
+    "suvrat": [
+      "https://tenor.com/view/panda-office-pissed-tantrum-mad-gif-5146825"
+    ],
+    "erica": [" M O M M Y "],
+    "abby": ["https://tenor.com/view/bathing-suit-bathing-suit-gif-7549898"],
+    "molly": ["💊💊💊 D R U G 💊💊💊"],
+    "bot": [
+      "<:dogegun:719305088409272404> Bichh what do you want?",
+      "<:dogegun:719305088409272404> Bruh whut?",
+      "<:dogegun:719305088409272404> YES BICHH TELL ME?",
+      "<:dogegun:719305088409272404> Yeah bichh. why you callin me?",
+      "Yes I'm here bichh. Always online hehe"
+    ],
+    "gurleen": [
+      "https://tenor.com/view/teddy-bear-ted-drinking-beer-beer-bottles-gif-16856499"
+    ],
+    "nikki": [
+      "https://tenor.com/view/grrr-taco-guru-taco-guru-grrr-coqueto-conquista-gif-12142914"
+    ],
+    "nahi": [
+      "https://cdn.discordapp.com/attachments/740758309048549427/742108370630213924/tenor.gif"
+    ],
+    "dhruv": [
+      "D O E S - N O T - G I V E - S A T I S F A C T I O N",
+      "ARE YOU LOST BABY GIRL?",
+      "Gend Papita",
+      "wink wink",
+      "hui hui",
+      "OOpS",
+      "💦💦💦"
+    ],
+    "gratisfaction": [
+      "D O E S - N O T - G I V E - S A T I S F A C T I O N",
+      "ARE YOU LOST BABY GIRL?",
+      "Gend Papita",
+      "wink wink",
+      "hui hui",
+      "OOpS",
+      "💦💦💦"
+    ],
+    "mehz": ["🐱 PUS PUS 🐱"],
+    "dice": ["🎲1", "🎲2", "🎲3", "🎲4", "🎲5", "🎲6"]
   }
 }
