@@ -10,7 +10,7 @@ const isYoutube = new RegExp(
 );
 
 var compiledResponses = [];
-for (response in availableResponses.commands)
+for (response in availableResponse.commands)
   compiledResponses.push(`\`${response}\``);
 
 var connection;
