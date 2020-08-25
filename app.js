@@ -1,5 +1,6 @@
 require("dotenv").config();
 const Discord = require("discord.js");
+const ytdl = require("ytdl-core");
 const bot = new Discord.Client();
 const TOKEN = process.env.TOKEN;
 const embed = require("./embed");
@@ -16,6 +17,7 @@ var badWordList = require("./badWordList.json");
 var badWordException = require("./badWordExceptions.json");
 var compiledResponses = [];
 var renderData = {};
+var isReady = true;
 
 for (response in availableResponses.commands) compiledResponses.push(response);
 
@@ -49,7 +51,7 @@ bot.login(TOKEN);
 //Bot on-login success callback
 bot.on("ready", () => {
   console.info(`Logged in as ${bot.user.tag}!`);
-  bot.user.setActivity("The exclusive custom bot of USA - India Server");
+  bot.user.setActivity("The exclusive custom bot of College in Quarantine Server");
 });
 
 //Bot on-message callback
@@ -57,10 +59,7 @@ bot.on("message", async (msg) => {
   //Dynamic responses from availableResponses json
   for (messageKey in availableResponses.commands) {
     if (msg.content.toLowerCase() == messageKey) {
-      msg.channel.send(availableResponses.commands[messageKey]);
-      console.log(
-        "Sent Dynamic Response: " + availableResponses.commands[messageKey]
-      );
+      sendResponse(msg, availableResponses.commands[messageKey]);
     }
   }
   if (
@@ -107,35 +106,54 @@ bot.on("message", async (msg) => {
       );
     }
   }
-
-  //Bad word Filter
-
-  /* DISABLED FOR REBUILD
-
-  badWordList.some((badWordElement) => {
-    
-    if( msg.content.toLowerCase().replace(/\s/g, "").includes(badWordElement) && msg.author.id != bot.user.id){
-
-      sendBadWordAlert = true; //Send Alert
-
-      //Exception Filter
-      badWordException.some((exceptionElement) => {
-        if(msg.content.toLowerCase().replace(/\s/g, "").includes(exceptionElement)) {
-          sendBadWordAlert = false;
-          console.log("Exception filtered " + exceptionElement)
+  if (msg.member.voice.channel) {
+    var connection;
+    var voiceChannel = msg.member.voice.channel;
+    if (msg.content.startsWith("popn vc")) {
+      if (msg.content.toLowerCase() == "popn vc connect") {
+        connection = await voiceChannel.join();
+      }
+      if (msg.content.toLowerCase() == "popn vc leave") {
+        voiceChannel.leave();
+      }
+      if (msg.content.toLowerCase() == "popn vc illuminati") {
+        if (connection) {
+          connection.play("./Audio/illuminati.mp3");
+        } else {
+          connection = await voiceChannel.join();
+          connection.play("./Audio/illuminati.mp3");
         }
-      });
+      }
+      if (msg.content.toLowerCase() == "popn vc wow") {
+        if (connection) {
+          connection.play(ytdl("https://www.youtube.com/watch?v=zqTwOoElxBA"));
+        } else {
+          connection = await voiceChannel.join();
+          connection.play(ytdl("https://www.youtube.com/watch?v=zqTwOoElxBA"));
+        }
+      }
+      if (msg.content.toLowerCase() == "popn vc error") {
+        if (connection) {
+          connection.play(ytdl("https://www.youtube.com/watch?v=0lhhrUuw2N8"));
+        } else {
+          connection = await voiceChannel.join();
+          connection.play(ytdl("https://www.youtube.com/watch?v=0lhhrUuw2N8"));
+        }
+      }
+      if (msg.content.startsWith("popn vc yt")) {
+        link = msg.content.split(" ")[3];
+        if (connection) {
+          connection.play(ytdl(link));
+        } else {
+          connection = await voiceChannel.join();
+          connection.play(ytdl(link));
+        }
+      }
     }
-
-    if (sendBadWordAlert == true) {
-      console.log("BAD WORD ALERT SEND " + badWordElement)
-      msg.react("🚨");
-      msg.channel.send("🚨 BAD WORD ALERT 🚨");
-      badWordAlertMarker = true;
-    }
-    sendBadWordAlert = false;
-  });
-  */
+  } else {
+    if (msg.content.startsWith("popn vc"))
+      msg.reply("You're not in a vc bichh");
+  }
 
   //Levels Channel Filter
   if (msg.channel.id == "719506718656167988") checkForSpam(msg);
@@ -149,4 +167,9 @@ function checkForSpam(message) {
       message.author.send(embed.levelsDMWarning);
     }
   }
+}
+
+async function sendResponse(msg, response) {
+  msg.channel.send(response);
+  console.log("Sent Dynamic Response: " + response);
 }
