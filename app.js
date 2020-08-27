@@ -120,6 +120,24 @@ bot.on("message", async (msg) => {
     stop(msg, serverQueue);
     return;
   }
+
+  //Download youtube link
+  if (msg.content.toLowerCase().startsWith(`${prefix} download`)) {
+    var youtubeLink = msg.content.split(" ")[2];
+    var youtubeName;
+    await ytdl.getBasicInfo(youtubeLink, (err, info) => {
+      return (youtubeName = info.videoDetails.title);
+    });
+    const attachment = new Discord.MessageAttachment(
+      ytdl(youtubeLink, { filter: "audioonly", format: "mp3" }),
+      `${youtubeName}.mp3`
+    );
+    if (isYoutube.test(youtubeLink)) {
+      msg.channel.send("Here you go bruh 🎵", {
+        files: [attachment],
+      });
+    }
+  }
 });
 
 //Song execute
