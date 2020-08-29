@@ -64,7 +64,7 @@ bot.on("message", async (msg) => {
   if (msg.channel.id == "719506718656167988") {
     if (
       !msg.content.toLowerCase().startsWith("!rank") ||
-      !msg.content.toLowerCase() == "!levels"
+      !msg.content.toLowerCase().startsWith("!levels")
     ) {
       if (msg.author.id != "159985870458322944") {
         msg.delete();
