@@ -14,6 +14,11 @@ var compiledResponses = [];
 for (response in availableResponse.commands)
   compiledResponses.push(`\`${response}\``);
 
+var allPlaylists = [];
+for (playlistName in playlists) {
+  allPlaylists.push(playlistName);
+}
+
 var isRadio = {};
 
 const queue = new Map();
@@ -232,7 +237,11 @@ function play(guild, song) {
       serverQueue.songs.shift();
       if (isRadio.status) {
         console.log(serverQueue.songs);
-        youtubeLink = randomSong(isRadio.genre);
+        if (isRadio.genre == "random") {
+          youtubeLink = randomPlaylistSong();
+        } else {
+          youtubeLink = randomSong(isRadio.genre);
+        }
         songinfo = await ytdl.getBasicInfo(youtubeLink);
         serverQueue.songs.push({
           title: `${isRadio.genre} radio playing ${songinfo.videoDetails.title}`,
@@ -255,16 +264,24 @@ function play(guild, song) {
 //Radio queue
 function radio(message, serverQueue) {
   args = message.content.split(" ");
-  if (args[2].toLowerCase() == "off") {
-    message.channel.send(
-      "Disabled radio. The bot will stop playing when queue ends"
-    );
-    return (isRadio.status = false);
+  if (args[2]) {
+    if (args[2].toLowerCase() == "off") {
+      message.channel.send(
+        "Disabled radio. The bot will stop playing when queue ends"
+      );
+      return (isRadio.status = false);
+    }
   }
+
   executeMsg = message;
   isRadio.status = true;
-  isRadio.genre = args[2];
-  youtubeLink = randomSong(args[2]);
+  if (!args[2]) {
+    youtubeLink = randomPlaylistSong();
+    isRadio.genre = "random";
+  } else {
+    isRadio.genre = args[2];
+    youtubeLink = randomSong(args[2]);
+  }
   executeMsg.content = `${prefix} play ${youtubeLink}`;
   if (youtubeLink) {
     return execute(executeMsg, serverQueue);
@@ -300,4 +317,11 @@ function songQueue(message, serverQueue) {
     .setTitle("Song Queue")
     .addFields({ name: "Queue", value: songList });
   message.channel.send(queueEmbed);
+}
+
+//Anything from any playlist
+function randomPlaylistSong() {
+  randomPlaylist =
+    allPlaylists[Math.floor(Math.random() * allPlaylists.length)];
+  return randomSong(randomPlaylist);
 }
