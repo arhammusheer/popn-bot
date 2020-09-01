@@ -118,7 +118,7 @@ bot.on("message", async (msg) => {
   } else if (msg.content.startsWith(`${prefix} stop`)) {
     stop(msg, serverQueue);
     return;
-  } else if (msg.content.startsWith(`${prefix} random`)) {
+  } else if (msg.content.startsWith(`${prefix} radio`)) {
     radio(msg, serverQueue);
   } else if (msg.content.startsWith(`${prefix} queue`)) {
     songQueue(msg, serverQueue);
