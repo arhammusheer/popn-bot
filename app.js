@@ -17,7 +17,6 @@ for (response in availableResponse.commands)
 var connection;
 var dispatcher;
 var voiceChannel;
-var isRadio;
 
 const queue = new Map();
 
@@ -172,7 +171,7 @@ async function execute(message, serverQueue) {
       voiceChannel: voiceChannel,
       connection: null,
       songs: [],
-      volume: 5,
+      volume: 6,
       playing: true,
     };
 
@@ -190,8 +189,6 @@ async function execute(message, serverQueue) {
       return message.channel.send(err);
     }
   } else {
-    if (!queueContruct.connection)
-      serverQueue.connection = await voiceChannel.join();
     serverQueue.songs.push(song);
     return message.channel.send(`${song.title} has been added to the queue!`);
   }
@@ -199,7 +196,6 @@ async function execute(message, serverQueue) {
 
 //Song Skip
 function skip(message, serverQueue) {
-  serverQueue.songs.push(getSong(randomSong(isRadio.genre)));
   if (!message.member.voice.channel)
     return message.channel.send(
       "You have to be in a voice channel to stop the music!"
@@ -232,9 +228,6 @@ function play(guild, song) {
     .play(ytdl(song.url))
     .on("finish", () => {
       serverQueue.songs.shift();
-      if (serverQueue.songs == []) {
-        serverQueue.songs.push(getSong(randomSong(isRadio.genre)));
-      }
       play(guild, serverQueue.songs[0]);
     })
     .on("error", (error) => console.error(error));
@@ -245,14 +238,12 @@ function play(guild, song) {
 function radio(message, serverQueue) {
   args = message.content.split(" ");
   executeMsg = message;
-  isRadio.playing = true;
-  isRadio.genre = args[2];
   youtubeLink = randomSong(args[2]);
   executeMsg.content = `${prefix} play ${youtubeLink}`;
-  if (youtubeLink) {
+  if(youtubeLink){
     return execute(executeMsg, serverQueue);
   } else {
-    message.channel.send("An error occured. I'm sorry. I sed 😢");
+    message.channel.send("An error occured. I'm sorry. I sed 😢")
   }
 }
 
@@ -265,13 +256,4 @@ function randomSong(request) {
       return youtubeLink;
     }
   }
-}
-
-async function getSong(youtubeLink) {
-  var songInfo = await ytdl.getBasicInfo(youtubeLink);
-  var song = {
-    title: songInfo.videoDetails.title,
-    url: songInfo.videoDetails.video_url,
-  };
-  return song;
 }
