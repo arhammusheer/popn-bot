@@ -53,14 +53,14 @@ bot.on("message", async (msg) => {
         },
         {
           name: "Get your own response",
-          value: "DM <@!490907114370236426> to get your own custom response",
+          value: `DM <@!${process.env.SERVER_ADMIN_ID}> to get your own custom response`,
         }
       );
     msg.channel.send(helpmenu);
   }
 
   //Levels filter
-  if (msg.channel.id == "719506718656167988") {
+  if (msg.channel.id == process.env.LEVELS_CHANNEL_ID) {
     if (
       !msg.content.toLowerCase().startsWith("!rank") ||
       !msg.content.toLowerCase().startsWith("!levels")
@@ -85,7 +85,7 @@ bot.on("message", async (msg) => {
   }
 
   //AutoClear handler
-  if (msg.channel.id == "741133567811256372") {
+  if (msg.channel.id == process.env.AUTOCLEAR_CHANNEL_ID) {
     msg.delete({ timeout: 8000 });
     if (msg.content.toLowerCase() == `${prefix} delete all`) {
       const fetched = await msg.channel.messages.fetch({ limit: 100 });
