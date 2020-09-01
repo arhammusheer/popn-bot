@@ -204,7 +204,7 @@ async function execute(message, serverQueue) {
   } else {
     await serverQueue.voiceChannel.join();
     serverQueue.songs.push(song);
-    return message.channel.send(`${song.title} has been added to the queue!`);
+    return message.channel.send(`**${song.title}** has been added to the queue!`);
   }
 }
 
@@ -252,7 +252,7 @@ function play(guild, song) {
         }
         songinfo = await ytdl.getBasicInfo(youtubeLink);
         serverQueue.songs.push({
-          title: `${isRadio.genre} radio playing ${songinfo.videoDetails.title}`,
+          title: `**${isRadio.genre}:** ${songinfo.videoDetails.title}`,
           url: youtubeLink,
         });
       }
