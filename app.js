@@ -49,7 +49,7 @@ bot.on("message", async (msg) => {
         { name: "Available Responses:", value: compiledResponses.join(" ") },
         {
           name: "Music commands",
-          value: `${prefix} [youtube link], ${prefix} stop, ${prefix} skip, ${prefix} random [pop/trap/rap/lowfi/weeb/kpop/gaming/house/hindi]`,
+          value: `${prefix} [youtube link], ${prefix} stop, ${prefix} skip, ${prefix} random [pop/trap/rap/lowfi/weeb/kpop/gaming/house/hindi/punjabi]`,
         },
         {
           name: "Get your own response",
