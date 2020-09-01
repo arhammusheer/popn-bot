@@ -238,14 +238,22 @@ function play(guild, song) {
 function radio(message, serverQueue) {
   args = message.content.split(" ");
   executeMsg = message;
-  console.log(args[2]);
-  for (Playlist in playlists) {
-    if (Playlist == args[2]) {
-      currentPlaylist = playlists[Playlist];
+  youtubeLink = randomSong(args[2]);
+  executeMsg.content = `${prefix} play ${youtubeLink}`;
+  if(youtubeLink){
+    return execute(executeMsg, serverQueue);
+  } else {
+    message.channel.send("An error occured. I'm sorry. I sed 😢")
+  }
+}
+
+function randomSong(request) {
+  for (genre in playlists) {
+    if (genre == request) {
+      currentPlaylist = playlists[genre];
       youtubeLink =
         currentPlaylist[Math.floor(Math.random() * currentPlaylist.length)];
-      executeMsg.content = `${prefix} play ${youtubeLink}`;
-      return execute(executeMsg, serverQueue);
+      return youtubeLink;
     }
   }
 }
