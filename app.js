@@ -1,6 +1,7 @@
 require("dotenv").config();
 const ytdl = require("ytdl-core");
 const Discord = require("discord.js");
+const youtube = require("youtube-search");
 const bot = new Discord.Client();
 
 const { prefix, name } = require("./config.json");
@@ -22,6 +23,11 @@ for (playlistName in playlists) {
 var isRadio = {};
 
 const queue = new Map();
+
+const youtubeCreds = {
+  maxResults: 1,
+  key: process.env.YOUTUBE_API_KEY,
+};
 
 //Log into Discord
 bot.login(process.env.TOKEN);
@@ -127,6 +133,8 @@ bot.on("message", async (msg) => {
     radio(msg, serverQueue);
   } else if (msg.content.startsWith(`${prefix} queue`)) {
     songQueue(msg, serverQueue);
+  } else if (msg.content.startsWith(`${prefix} yt`)) {
+    youtubeSearch(msg, serverQueue);
   }
 
   //Download youtube link
@@ -324,4 +332,18 @@ function randomPlaylistSong() {
   randomPlaylist =
     allPlaylists[Math.floor(Math.random() * allPlaylists.length)];
   return randomSong(randomPlaylist);
+}
+
+//Youtube Search
+async function youtubeSearch(message, serverQueue) {
+  searchString = message.content.substring(8);
+  executeMsg = message;
+  await youtube(searchString, youtubeCreds, (err, results) => {
+    if (err) {
+      console.log(err);
+      return message.channel.send("An error occured");
+    }
+    executeMsg.content = `${prefix} play ${results[0].link}`;
+    execute(executeMsg, serverQueue);
+  });
 }
