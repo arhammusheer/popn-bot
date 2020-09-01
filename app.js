@@ -70,31 +70,6 @@ bot.on("message", async (msg) => {
     msg.channel.send(helpmenu);
   }
 
-  //Levels filter
-  if (msg.channel.id == process.env.LEVELS_CHANNEL_ID) {
-    if (
-      !msg.content.toLowerCase().startsWith("!rank") ||
-      !msg.content.toLowerCase().startsWith("!levels")
-    ) {
-      if (msg.author.id != "159985870458322944") {
-        msg.delete();
-        msg.author.send(
-          new Discord.MessageEmbed()
-            .setColor("#000000")
-            .setTitle("Levels Help")
-            .addFields(
-              {
-                name: "Warning",
-                value:
-                  "The message you sent is not a command. To send any other message, please move to <#718721072450633731>",
-              },
-              { name: "Available Commands", value: "!levels, !rank" }
-            )
-        );
-      }
-    }
-  }
-
   //AutoClear handler
   if (msg.channel.id == process.env.AUTOCLEAR_CHANNEL_ID) {
     msg.delete({ timeout: 8000 });
