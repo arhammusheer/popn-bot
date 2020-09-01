@@ -260,10 +260,17 @@ function play(guild, song) {
     })
     .on("error", (error) => console.error(error));
   dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
+  playingHeading = () => {
+    if (isRadio.status) {
+      return `${isRadio.genre} Radio`;
+    } else {
+      return `Playing from queue`;
+    }
+  };
   songEmbed = new Discord.MessageEmbed()
     .setTitle(song.title)
     .addFields(
-      { name: "Playing", value: `${isRadio.genre} radio` },
+      { name: "Playing", value: playingHeading },
       { name: "Song", value: song.url }
     );
   serverQueue.textChannel.send(songEmbed);
