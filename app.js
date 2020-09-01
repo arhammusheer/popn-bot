@@ -204,7 +204,9 @@ async function execute(message, serverQueue) {
   } else {
     await serverQueue.voiceChannel.join();
     serverQueue.songs.push(song);
-    return message.channel.send(`**${song.title}** has been added to the queue!`);
+    return message.channel.send(
+      `**${song.title}** has been added to the queue!`
+    );
   }
 }
 
@@ -346,7 +348,8 @@ function randomPlaylistSong() {
   randomPlaylist =
     allPlaylists[Math.floor(Math.random() * allPlaylists.length)];
   Song = randomSong(randomPlaylist);
-  Song.title = `**${randomPlaylist}:** ${Song.title}`
+  Song.title = `**${randomPlaylist}:** ${Song.title}`;
+  return Song;
 }
 
 //Youtube Search
