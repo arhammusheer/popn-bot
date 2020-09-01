@@ -101,9 +101,9 @@ bot.on("message", async (msg) => {
         );
     }
   }
+
   //Server queue
   const serverQueue = queue.get(msg.guild.id);
-
   //music commands
   if (msg.content.startsWith(`${prefix} play`)) {
     if (isYoutube.test(msg.content.split(" ")[2])) {
@@ -187,6 +187,7 @@ async function execute(message, serverQueue) {
       return message.channel.send(err);
     }
   } else {
+    await serverQueue.voiceChannel.join();
     serverQueue.songs.push(song);
     return message.channel.send(`${song.title} has been added to the queue!`);
   }
@@ -244,7 +245,7 @@ function play(guild, song) {
     .setTitle(song.title)
     .addFields(
       { name: "Playing", value: `${isRadio.genre} radio` },
-      { name: "Song", value: song.url}
+      { name: "Song", value: song.url }
     );
   serverQueue.textChannel.send(songEmbed);
 }
