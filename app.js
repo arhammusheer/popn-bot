@@ -255,7 +255,12 @@ function play(guild, song) {
 //Radio queue
 function radio(message, serverQueue) {
   args = message.content.split(" ");
-  if (args[2].toLowerCase() == "off") return (isRadio.status = false);
+  if (args[2].toLowerCase() == "off") {
+    message.channel.send(
+      "Disabled radio. The bot will stop playing when queue ends"
+    );
+    return (isRadio.status = false);
+  }
   executeMsg = message;
   isRadio.status = true;
   isRadio.genre = args[2];
