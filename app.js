@@ -261,13 +261,11 @@ function play(guild, song) {
     .on("error", (error) => console.error(error));
   dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
   var playingHeading;
-  () => {
-    if (isRadio.status) {
-      playingHeading = `${isRadio.genre} Radio`;
-    } else {
-      playingHeading = `Playing from queue`;
-    }
-  };
+  if (isRadio.status) {
+    playingHeading = `${isRadio.genre} Radio`;
+  } else {
+    playingHeading = `Playing from queue`;
+  }
   songEmbed = new Discord.MessageEmbed()
     .setTitle(song.title)
     .addFields(
