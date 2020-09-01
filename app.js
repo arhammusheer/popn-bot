@@ -326,10 +326,18 @@ function songQueue(message, serverQueue) {
   } else {
     songList = "No songs in queue";
   }
-
+  var playingHeading;
+  if (isRadio.status) {
+    playingHeading = `${isRadio.genre} Radio`;
+  } else {
+    playingHeading = `Playing from queue. Radio OFF`;
+  }
   queueEmbed = new Discord.MessageEmbed()
     .setTitle("Song Queue")
-    .addFields({ name: "Queue", value: songList });
+    .addFields(
+      { name: "Queue", value: songList },
+      { name: "Radio", value: playingHeading }
+    );
   message.channel.send(queueEmbed);
 }
 
