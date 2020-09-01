@@ -14,10 +14,6 @@ var compiledResponses = [];
 for (response in availableResponse.commands)
   compiledResponses.push(`\`${response}\``);
 
-var connection;
-var dispatcher;
-var voiceChannel;
-
 const queue = new Map();
 
 //Log into Discord
