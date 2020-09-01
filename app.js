@@ -120,6 +120,8 @@ bot.on("message", async (msg) => {
     return;
   } else if (msg.content.startsWith(`${prefix} random`)) {
     radio(msg, serverQueue);
+  } else if (msg.content.startsWith(`${prefix} queue`)) {
+    songQueue(msg, serverQueue);
   }
 
   //Download youtube link
@@ -169,7 +171,7 @@ async function execute(message, serverQueue) {
       voiceChannel: voiceChannel,
       connection: null,
       songs: [],
-      volume: 6,
+      volume: 5,
       playing: true,
     };
 
@@ -229,9 +231,9 @@ function play(guild, song) {
     .on("finish", async () => {
       serverQueue.songs.shift();
       if (isRadio.status) {
+        console.log(serverQueue.songs);
         youtubeLink = randomSong(isRadio.genre);
         songinfo = await ytdl.getBasicInfo(youtubeLink);
-        console.log(youtubeLink);
         serverQueue.songs.push({
           title: `${isRadio.genre} radio playing ${songinfo.videoDetails.title}`,
           url: youtubeLink,
@@ -275,4 +277,21 @@ function randomSong(request) {
       return youtubeLink;
     }
   }
+}
+
+//Server Song Queue
+function songQueue(message, serverQueue) {
+  songList = ``;
+  if (serverQueue.songs) {
+    for (song in serverQueue.songs) {
+      songList = `${songList}\n ${serverQueue.songs[song].title}`;
+    }
+  } else {
+    songList = "No songs in queue";
+  }
+
+  queueEmbed = new Discord.MessageEmbed()
+    .setTitle("Song Queue")
+    .addFields({ name: "Queue", value: songList });
+  message.channel.send(queueEmbed);
 }
