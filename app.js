@@ -190,7 +190,8 @@ async function execute(message, serverQueue) {
       return message.channel.send(err);
     }
   } else {
-    if(!queueContruct.connection) serverQueue.connection = await voiceChannel.join();
+    if (!queueContruct.connection)
+      serverQueue.connection = await voiceChannel.join();
     serverQueue.songs.push(song);
     return message.channel.send(`${song.title} has been added to the queue!`);
   }
@@ -198,7 +199,7 @@ async function execute(message, serverQueue) {
 
 //Song Skip
 function skip(message, serverQueue) {
-  serverQueue.songs.push(getSong(randomSong(isRadio.genre)))
+  serverQueue.songs.push(getSong(randomSong(isRadio.genre)));
   if (!message.member.voice.channel)
     return message.channel.send(
       "You have to be in a voice channel to stop the music!"
@@ -231,7 +232,9 @@ function play(guild, song) {
     .play(ytdl(song.url))
     .on("finish", () => {
       serverQueue.songs.shift();
-      if(serverQueue.songs == []) {serverQueue.songs.push(getSong(randomSong(isRadio.genre)))}
+      if (serverQueue.songs == []) {
+        serverQueue.songs.push(getSong(randomSong(isRadio.genre)));
+      }
       play(guild, serverQueue.songs[0]);
     })
     .on("error", (error) => console.error(error));
@@ -264,11 +267,11 @@ function randomSong(request) {
   }
 }
 
-function getSong(youtubeLink){
+async function getSong(youtubeLink) {
   var songInfo = await ytdl.getBasicInfo(youtubeLink);
   var song = {
     title: songInfo.videoDetails.title,
     url: songInfo.videoDetails.video_url,
-  }
-  return song
+  };
+  return song;
 }
