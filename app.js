@@ -14,6 +14,8 @@ var compiledResponses = [];
 for (response in availableResponse.commands)
   compiledResponses.push(`\`${response}\``);
 
+var isRadio = {};
+
 const queue = new Map();
 
 //Log into Discord
@@ -208,6 +210,7 @@ function stop(message, serverQueue) {
       "You have to be in a voice channel to stop the music!"
     );
   serverQueue.songs = [];
+  isRadio.status = false;
   serverQueue.connection.dispatcher.end();
 }
 
@@ -222,27 +225,46 @@ function play(guild, song) {
 
   const dispatcher = serverQueue.connection
     .play(ytdl(song.url))
-    .on("finish", () => {
+    .on("finish", async () => {
       serverQueue.songs.shift();
+      if (isRadio.status) {
+        youtubeLink = randomSong(isRadio.genre);
+        songinfo = await ytdl.getBasicInfo(youtubeLink);
+        console.log(youtubeLink);
+        serverQueue.songs.push({
+          title: `${isRadio.genre} radio playing ${songinfo.videoDetails.title}`,
+          url: youtubeLink,
+        });
+      }
       play(guild, serverQueue.songs[0]);
     })
     .on("error", (error) => console.error(error));
   dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
-  serverQueue.textChannel.send(`Imma play **${song.title}**`);
+  songEmbed = new Discord.MessageEmbed()
+    .setTitle(song.title)
+    .addFields(
+      { name: "Playing", value: `${isRadio.genre} radio` },
+      { name: "Song", value: song.url}
+    );
+  serverQueue.textChannel.send(songEmbed);
 }
 
+//Radio queue
 function radio(message, serverQueue) {
   args = message.content.split(" ");
   executeMsg = message;
+  isRadio.status = true;
+  isRadio.genre = args[2];
   youtubeLink = randomSong(args[2]);
   executeMsg.content = `${prefix} play ${youtubeLink}`;
-  if(youtubeLink){
+  if (youtubeLink) {
     return execute(executeMsg, serverQueue);
   } else {
-    message.channel.send("An error occured. I'm sorry. I sed 😢")
+    message.channel.send("An error occured. I'm sorry. I sed 😢");
   }
 }
 
+//Pick random
 function randomSong(request) {
   for (genre in playlists) {
     if (genre == request) {
