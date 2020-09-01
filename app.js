@@ -252,7 +252,7 @@ function play(guild, song) {
         }
         songinfo = await ytdl.getBasicInfo(youtubeLink);
         serverQueue.songs.push({
-          title: `**${isRadio.genre}:** ${songinfo.videoDetails.title}`,
+          title: songinfo.videoDetails.title,
           url: youtubeLink,
         });
       }
@@ -345,7 +345,8 @@ function songQueue(message, serverQueue) {
 function randomPlaylistSong() {
   randomPlaylist =
     allPlaylists[Math.floor(Math.random() * allPlaylists.length)];
-  return randomSong(randomPlaylist);
+  Song = randomSong(randomPlaylist);
+  Song.title = `**${randomPlaylist}:** ${Song.title}`
 }
 
 //Youtube Search
