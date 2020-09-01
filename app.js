@@ -5,6 +5,7 @@ const bot = new Discord.Client();
 
 const { prefix, name } = require("./config.json");
 const availableResponse = require("./availableResponses.json");
+const playlists = require("./youtubeRandom.json");
 const isYoutube = new RegExp(
   "^(http(s)?://)?((w){3}.)?youtu(be|.be)?(.com)?/.+"
 );
@@ -50,7 +51,7 @@ bot.on("message", async (msg) => {
         { name: "Available Responses:", value: compiledResponses.join(" ") },
         {
           name: "Music commands",
-          value: `${prefix} [youtube link], ${prefix} leave`,
+          value: `${prefix} [youtube link], ${prefix} stop, ${prefix} skip, ${prefix} random [pop/trap/rap/lowfi/weeb/kpop/gaming]`,
         },
         {
           name: "Get your own response",
@@ -119,6 +120,8 @@ bot.on("message", async (msg) => {
   } else if (msg.content.startsWith(`${prefix} stop`)) {
     stop(msg, serverQueue);
     return;
+  } else if (msg.content.startsWith(`${prefix} random`)) {
+    radio(msg, serverQueue);
   }
 
   //Download youtube link
@@ -229,5 +232,20 @@ function play(guild, song) {
     })
     .on("error", (error) => console.error(error));
   dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
-  serverQueue.textChannel.send(`Start playing: **${song.title}**`);
+  serverQueue.textChannel.send(`Imma play **${song.title}**`);
+}
+
+function radio(message, serverQueue) {
+  args = message.content.split(" ");
+  executeMsg = message;
+  console.log(args[2]);
+  for (Playlist in playlists) {
+    if (Playlist == args[2]) {
+      currentPlaylist = playlists[Playlist];
+      youtubeLink =
+        currentPlaylist[Math.floor(Math.random() * currentPlaylist.length)];
+      executeMsg.content = `${prefix} play ${youtubeLink}`;
+      return execute(executeMsg, serverQueue);
+    }
+  }
 }
