@@ -7,6 +7,9 @@ const bot = new Discord.Client();
 const { prefix, name } = require("./config.json");
 const availableResponse = require("./availableResponses.json");
 const playlists = require("./youtubeRandom.json");
+const isLink = new RegExp(
+  /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/
+);
 const isYoutube = new RegExp(
   "^(http(s)?://)?((w){3}.)?youtu(be|.be)?(.com)?/.+"
 );
@@ -92,10 +95,14 @@ bot.on("message", async (msg) => {
   const serverQueue = queue.get(msg.guild.id);
   //music commands
   if (msg.content.startsWith(`${prefix} play`)) {
-    if (isYoutube.test(msg.content.split(" ")[2])) {
-      execute(msg, serverQueue);
+    if (isLink.test(msg.content.split(" ")[2])) {
+      if (isYoutube.test(msg.content.split(" ")[2])) {
+        execute(msg, serverQueue);
+      } else {
+        msg.channel.send("Bruh...This ain't a youtube link");
+      }
     } else {
-      msg.channel.send("Bruh...This ain't a youtube link");
+      youtubeSearch(msg, serverQueue);
     }
     return;
   } else if (msg.content.startsWith(`${prefix} skip`)) {
