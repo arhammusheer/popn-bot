@@ -117,6 +117,8 @@ bot.on("message", async (msg) => {
     songQueue(msg, serverQueue);
   } else if (msg.content.startsWith(`${prefix} yt`)) {
     youtubeSearch(msg, serverQueue);
+  } else if (msg.content.startsWith(`${prefix} spotify`)) {
+    playFromSpotify(msg, serverQueue);
   }
 
   //Download youtube link
@@ -346,4 +348,25 @@ async function youtubeSearch(message, serverQueue) {
     executeMsg.content = `${prefix} play ${results[0].link}`;
     execute(executeMsg, serverQueue);
   });
+}
+
+//Get song from User's presence activity on spotify
+function playFromSpotify(msg, serverQueue) {
+  executeMsg = msg;
+  user = msg.mentions.users.first() || msg.author;
+  for (Index in user.presence.activities) {
+    activity = user.presence.activities[Index];
+    if (
+      activity !== null &&
+      activity.type == "LISTENING" &&
+      activity.name === "Spotify" &&
+      activity.assets !== null
+    ) {
+      trackName = activity.details;
+      trackAuthor = activity.state;
+      executeMsg.content = `${prefix} yt ${trackName} ${trackAuthor}`;
+      return youtubeSearch(executeMsg, serverQueue);
+    }
+  }
+  return msg.channel.send("Bruh this user ain't listening to spotify");
 }
