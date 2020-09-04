@@ -129,7 +129,7 @@ bot.on("message", async (msg) => {
       return (youtubeName = info.videoDetails.title);
     });
     const attachment = new Discord.MessageAttachment(
-      ytdl(youtubeLink, { filter: "audioonly", format: "mp3" }),
+      ytdl(youtubeLink, { filter: "audioonly", format: "mp3", highWaterMark: 1<<25 }),
       `${youtubeName}.mp3`
     );
     if (isYoutube.test(youtubeLink)) {
