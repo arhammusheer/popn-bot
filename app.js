@@ -25,6 +25,7 @@ for (playlistName in playlists) {
 }
 
 var isRadio = {};
+var snipeMessage;
 
 const queue = new Map();
 
@@ -40,6 +41,11 @@ bot.login(process.env.TOKEN);
 bot.once("ready", () => {
 	console.log(`${name} logged in!`);
 	bot.user.setActivity("Exclusive bot of College in Quarantine server");
+});
+
+bot.on("messageDelete", async (msg) => {
+	if (msg.author == bot.user) return;
+	snipeMessage = msg;
 });
 
 //Bot onMessage Callback
@@ -68,6 +74,24 @@ bot.on("message", async (msg) => {
 			})
 			.catch((err) => console.error(err));
 		return;
+	}
+
+	if (msg.content.toLowerCase() == `${prefix} snipe`) {
+		if (snipeMessage) {
+			embed = new Discord.MessageEmbed()
+				.setTitle(`${snipeMessage.author.username} deleted a message`)
+				.addFields({ name: "message", value: snipeMessage.content });
+			msg.delete({ timeout: 10000 });
+			msg.channel.send(embed).then((message) => {
+				message.delete({ timeout: 10000 });
+			});
+			snipeMessage = undefined;
+		} else {
+			msg.delete({ timeout: 5000 });
+			msg.channel.send(`There's nothin to snipe`).then((message) => {
+				message.delete({ timeout: 5000 });
+			});
+		}
 	}
 
 	//popn help menu
